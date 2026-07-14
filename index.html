@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 19th Birthday, Faith 🎉</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Inter','sans-serif'], serif: ['Playfair Display','serif'] },
+      colors: { cream:'#FFF8F0', blush:'#FFE4E6', lavender:'#E8D5F5', skysoft:'#DBEAFE' }
+    }
+  }
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;overflow-x:hidden}
+
+/* Animated background */
+.bg-main{
+  background:linear-gradient(-45deg,#FFF8F0,#FFE4E6,#E8D5F5,#DBEAFE,#FFF0F5,#F0F0FF);
+  background-size:500% 500%;
+  animation:gradShift 20s ease infinite;
+  min-height:100vh;
+}
+@keyframes gradShift{
+  0%{background-position:0% 50%}
+  25%{background-position:50% 0%}
+  50%{background-position:100% 50%}
+  75%{background-position:50% 100%}
+  100%{background-position:0% 50%}
+}
+
+/* Glassmorphism */
+.glass{
+  background:rgba(255,255,255,0.35);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.5);
+  border-radius:1.5rem;
+  box-shadow:0 8px 32px rgba(0,0,0,0.06),0 1px 3px rgba(0,0,0,0.04);
+}
+.glass-strong{
+  background:rgba(255,255,255,0.55);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,0.6);
+  border-radius:1.5rem;
+  box-shadow:0 8px 32px rgba(0,0,0,0.08);
+}
+
+/* Option buttons */
+.opt-btn{
+  background:rgba(255,255,255,0.45);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1.5px solid rgba(255,255,255,0.55);
+  border-radius:1rem;padding:0.875rem 1.125rem;
+  text-align:left;cursor:pointer;
+  transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+  display:flex;align-items:center;gap:0.75rem;
+  font-size:0.9375rem;color:#374151;line-height:1.5;
+  user-select:none;-webkit-user-select:none;
+}
+.opt-btn:hover:not(.locked){background:rgba(255,255,255,0.65);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.07)}
+.opt-btn:active:not(.locked){transform:translateY(0)}
+.opt-btn .letter{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.8125rem;font-weight:600;
+  background:rgba(0,0,0,0.05);color:#6B7280;
+  transition:all 0.35s ease;
+}
+.opt-btn.selected{background:rgba(244,114,182,0.12);border-color:rgba(244,114,182,0.35)}
+.opt-btn.selected .letter{background:rgba(244,114,182,0.2);color:#EC4899}
+.opt-btn.correct{background:rgba(34,197,94,0.12)!important;border-color:rgba(34,197,94,0.35)!important}
+.opt-btn.correct .letter{background:rgba(34,197,94,0.2)!important;color:#16A34A!important}
+.opt-btn.wrong{background:rgba(239,68,68,0.08)!important;border-color:rgba(239,68,68,0.25)!important}
+.opt-btn.wrong .letter{background:rgba(239,68,68,0.15)!important;color:#DC2626!important}
+.opt-btn.locked{cursor:default}
+
+/* Multi-select reveal button */
+.reveal-btn{
+  background:linear-gradient(135deg,#F472B6,#A78BFA);color:white;
+  padding:0.625rem 1.75rem;border-radius:100px;font-weight:500;font-size:0.875rem;
+  border:none;cursor:pointer;transition:all 0.3s ease;
+  box-shadow:0 2px 12px rgba(244,114,182,0.3);
+}
+.reveal-btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(244,114,182,0.4)}
+
+/* Continue button */
+.cont-btn{
+  background:linear-gradient(135deg,rgba(244,114,182,0.8),rgba(167,139,250,0.8));
+  color:white;padding:0.75rem 2.25rem;border-radius:100px;
+  font-weight:500;font-size:0.9375rem;border:none;cursor:pointer;
+  transition:all 0.3s ease;box-shadow:0 2px 12px rgba(244,114,182,0.25);
+}
+.cont-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(244,114,182,0.35)}
+
+/* Progress bar */
+.prog-track{height:4px;background:rgba(0,0,0,0.06);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#F472B6,#A78BFA,#60A5FA);border-radius:2px;transition:width 0.7s cubic-bezier(0.4,0,0.2,1)}
+
+/* Animations */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
+@keyframes cardEnter{from{opacity:0;transform:translateY(40px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes cardExit{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-25px) scale(0.96)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes heartFloat{
+  0%{transform:translateY(0) scale(0) rotate(0deg);opacity:0}
+  15%{opacity:1;transform:translateY(-10vh) scale(1) rotate(-5deg)}
+  85%{opacity:0.6}
+  100%{transform:translateY(-105vh) scale(0.4) rotate(10deg);opacity:0}
+}
+@keyframes slowZoom{0%{transform:scale(1)}100%{transform:scale(1.08)}}
+@keyframes bounceIn{0%{opacity:0;transform:scale(0.3)}50%{transform:scale(1.05)}70%{transform:scale(0.95)}100%{opacity:1;transform:scale(1)}}
+
+.anim-fade-up{animation:fadeInUp 0.8s ease-out forwards;opacity:0}
+.anim-card-enter{animation:cardEnter 0.6s cubic-bezier(0.4,0,0.2,1) forwards}
+.anim-card-exit{animation:cardExit 0.35s cubic-bezier(0.4,0,0.2,1) forwards}
+
+/* Particles */
+.particle{
+  position:fixed;border-radius:50%;pointer-events:none;z-index:1;
+  animation:particleFloat linear infinite;
+}
+@keyframes particleFloat{
+  0%{transform:translateY(100vh) rotate(0deg) scale(0);opacity:0}
+  8%{opacity:0.7;transform:translateY(90vh) rotate(30deg) scale(1)}
+  90%{opacity:0.5}
+  100%{transform:translateY(-10vh) rotate(360deg) scale(0.3);opacity:0}
+}
+
+/* Confetti canvas */
+#confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
+
+/* White overlay */
+#white-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:white;z-index:90;opacity:0;pointer-events:none;
+  transition:opacity 1.2s ease-in-out;
+}
+#white-overlay.active{opacity:1;pointer-events:all}
+
+/* Music button */
+#music-btn{
+  position:fixed;top:1.25rem;right:1.25rem;z-index:200;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.5);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.3s ease;
+  box-shadow:0 2px 10px rgba(0,0,0,0.06);
+}
+#music-btn:hover{background:rgba(255,255,255,0.7);transform:scale(1.05)}
+
+/* Letter paragraphs */
+.letter-p{
+  opacity:0;transform:translateY(20px);
+  transition:opacity 0.8s ease,transform 0.8s ease;
+}
+.letter-p.visible{opacity:1;transform:translateY(0)}
+
+/* Floating hearts */
+.float-heart{
+  position:fixed;pointer-events:none;z-index:95;
+  animation:heartFloat 5s ease-in forwards;
+}
+
+/* Ending zoom */
+.bg-zoom{animation:slowZoom 12s ease-in-out infinite alternate}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.12);border-radius:3px}
+
+/* Typewriter cursor */
+.typewriter-cursor::after{content:'|';animation:pulse 0.8s infinite;color:#A78BFA;margin-left:1px}
+
+@media(max-width:480px){
+  .opt-btn{padding:0.75rem 1rem;font-size:0.875rem}
+  .opt-btn .letter{width:24px;height:24px;font-size:0.75rem}
+}
+</style>
+</head>
+<body class="bg-main min-h-screen">
+
+<!-- Background particles container -->
+<div id="particles-container"></div>
+
+<!-- Confetti canvas -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- White overlay for cinematic fade -->
+<div id="white-overlay"></div>
+
+<!-- Music toggle -->
+<button id="music-btn" title="Toggle Music">
+  <iconify-icon id="music-icon" icon="lucide:volume-x" width="20" style="color:#6B7280"></iconify-icon>
+</button>
+
+<!-- ==================== LANDING PAGE ==================== -->
+<section id="landing" class="min-h-screen flex flex-col items-center justify-center px-6 relative z-10">
+  <div class="text-center max-w-lg">
+    <div class="anim-fade-up" style="animation-delay:0.2s">
+      <p class="text-sm font-medium tracking-widest uppercase text-pink-400 mb-4">✦ A Little Something For You ✦</p>
+    </div>
+    <h1 class="anim-fade-up text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6" style="animation-delay:0.5s;background:linear-gradient(135deg,#EC4899,#A855F7,#6366F1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">
+      Happy 19th Birthday,<br>Faith
+    </h1>
+    <p class="anim-fade-up text-gray-500 text-base sm:text-lg leading-relaxed mb-10 max-w-md mx-auto" style="animation-delay:0.8s">
+      "I made you something a little different.<br>
+      Answer a few questions...<br>
+      and maybe you'll discover how I see you."
+    </p>
+    <div class="anim-fade-up" style="animation-delay:1.1s">
+      <button id="start-btn" class="bg-gradient-to-r from-pink-400 to-purple-400 text-white px-10 py-3.5 rounded-full font-semibold text-base tracking-wide shadow-lg shadow-pink-300/40 hover:shadow-xl hover:shadow-pink-300/50 hover:-translate-y-1 transition-all duration-300 active:translate-y-0">
+        Start
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== QUIZ SECTION ==================== -->
+<section id="quiz-section" class="min-h-screen flex items-center justify-center px-5 py-10 relative z-10 hidden">
+  <div id="quiz-card" class="glass-strong w-full max-w-[580px] p-6 sm:p-8 anim-card-enter">
+    <div id="quiz-content"></div>
+  </div>
+</section>
+
+<!-- ==================== LETTER SECTION ==================== -->
+<section id="letter-section" class="min-h-screen relative z-10 hidden" style="padding:3rem 1.25rem 6rem">
+  <div class="max-w-[600px] mx-auto">
+    <div id="letter-content" class="font-serif text-gray-700 leading-[1.95] text-[1.05rem] sm:text-[1.1rem]"></div>
+    <div class="text-center mt-14 letter-p">
+      <button id="celebrate-btn" class="bg-gradient-to-r from-pink-400 to-purple-400 text-white px-8 py-3 rounded-full font-semibold text-base tracking-wide shadow-lg shadow-pink-300/40 hover:shadow-xl hover:shadow-pink-300/50 hover:-translate-y-1 transition-all duration-300">
+        Celebrate 🎉
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ENDING OVERLAY ==================== -->
+<div id="ending-overlay" class="fixed inset-0 z-[95] flex flex-col items-center justify-center px-6 hidden" style="background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)">
+  <div id="ending-content" class="text-center"></div>
+</div>
+
+<script>
+// ============================
+// QUIZ DATA (Edit everything here)
+// ============================
+const quizData = [
+  {
+    question: "What about our friendship annoys me the most?",
+    options: [
+      "Lack of outreach sometimes",
+      "We sometimes disappear for too long",
+      "We never plan anything properly",
+      "We don't have a single picture together"
+    ],
+    correct: [3],
+    multiSelect: false,
+    reveal: "Out of everything, this is probably the only thing I'd genuinely change. We've shared conversations I'll remember for years, laughed at the most random things, and somehow we don't have a single proper picture together. It's almost impressive, honestly. So yeah... we're fixing that."
+  },
+  {
+    question: "What is Faith most likely to do on her birthday?",
+    options: [
+      "Plan an elaborate celebration",
+      "Sleep through the morning",
+      "Post a birthday story immediately",
+      "Call everyone at midnight"
+    ],
+    correct: [1],
+    multiSelect: false,
+    reveal: null
+  },
+  {
+    question: "What is Faith's unofficial superpower?",
+    options: [
+      "Turning serious conversations into jokes",
+      "Being able to talk about almost anything",
+      "Remembering everyone's birthdays",
+      "Giving advice that actually works"
+    ],
+    correct: [0, 1],
+    multiSelect: true,
+    reveal: "You have this strange ability to make conversations feel effortless. Whether it's something deep, completely ridiculous, or somewhere in between, you somehow make people feel comfortable enough to keep talking. Hours pass without anyone noticing, and I genuinely think that's one of your gifts."
+  },
+  {
+    question: "What is Faith to me?",
+    options: [
+      "My therapist",
+      "My partner in crime",
+      "My favorite person to annoy",
+      "My safe space"
+    ],
+    correct: [3],
+    multiSelect: false,
+    reveal: "You have a way of making people feel accepted without even trying. Around you, I've never felt like I needed to hide parts of myself or worry about saying the wrong thing. You're calm without being boring, honest without being harsh, and kind without making it feel forced. That's what makes you such a safe place to be around."
+  },
+  {
+    question: "What's my favorite thing about talking to Faith?",
+    options: [
+      "You actually listen when I talk",
+      "You give advice that actually makes sense",
+      "You make me feel like what I say matters",
+      "All of the above"
+    ],
+    correct: [3],
+    multiSelect: false,
+    reveal: "My favorite part isn't just that you listen or give good advice. It's that you make people feel heard. You don't rush conversations, you don't make people feel silly for opening up, and somehow you always make it easier to carry whatever's on their mind. I don't know if you realize you do that, but you do."
+  },
+  {
+    question: "What would make the perfect next memory?",
+    options: [
+      "Taking a proper picture together",
+      "Going somewhere random",
+      "Having a deep conversation at 2am",
+      "Planning something we'll actually follow through with"
+    ],
+    correct: [0, 1],
+    multiSelect: true,
+    reveal: "You somehow make ordinary moments memorable. I don't think it matters where we go; I'd just like one of those random days that ends with us wondering why we didn't do it sooner... and this time, remembering to take a picture."
+  },
+  {
+    question: "Which phrase best describes Faith?",
+    options: [
+      "Kind but won't ever admit it",
+      "Funny in ways she doesn't even notice",
+      "Thoughtful in the smallest, quietest ways",
+      "All of the above"
+    ],
+    correct: [3],
+    multiSelect: false,
+    reveal: "If I had to describe you in one sentence, I'd probably say this: you're genuinely one of the kindest people I've ever met. You're thoughtful, patient, funny in ways you probably don't notice, and you make people feel like they matter. Those aren't qualities everyone has, and they're a big part of what makes you... you."
+  },
+  {
+    question: "What is the best part of our friendship?",
+    options: [
+      "The inside jokes nobody else would understand",
+      "The way we can be ourselves around each other",
+      "The late-night conversations that go nowhere",
+      "The fact that we never run out of things to say"
+    ],
+    correct: [1],
+    multiSelect: false,
+    reveal: null
+  },
+  {
+    question: "If I had to describe our friendship in one word...",
+    options: [
+      "Unbreakable",
+      "Genuine",
+      "Rare",
+      "Timeless"
+    ],
+    correct: [1],
+    multiSelect: false,
+    reveal: "I think the reason our friendship feels genuine is because of you. You make honesty feel easy. You never expect perfection, you never make people feel like they have to pretend, and that kind of acceptance is incredibly rare. I hope you never lose that part of yourself."
+  },
+  {
+    question: "What do I hope we do more of in the future?",
+    options: [
+      "Have more deep conversations",
+      "Finally take pictures together",
+      "Make more memories",
+      "All of the above"
+    ],
+    correct: [2],
+    multiSelect: false,
+    reveal: null
+  }
+];
+
+// Bonus page content
+const bonusContent = {
+  title: "📌 Developer's Note",
+  lines: [
+    "Historically, Faith has never really been the \"text me first\" type.",
+    "However, recent events have forced me to update the statistics.",
+    "She has now texted me first three separate times.",
+    "I've reviewed the evidence.",
+    "I've considered every possible explanation.",
+    "I've consulted absolutely nobody.",
+    "The verdict is clear.",
+    "She wants to marry me. 😂"
+  ]
+};
+
+// Final question
+const finalQuestion = {
+  question: "What do you think you mean to me?",
+  options: [
+    "A really good friend",
+    "Someone I'm incredibly glad I met",
+    "One of the most important people in my life",
+    "More than I could ever put into words"
+  ]
+};
+
+// Letter paragraphs
+const letterParagraphs = [
+  { text: "There isn't really a correct answer to that last question.", class: "italic text-gray-400 text-center text-base" },
+  { text: "The truth is... you're one of the greatest blessings God has ever brought into my life.", class: "font-semibold text-gray-800 text-center text-lg" },
+  { text: "I genuinely thank God for you. I don't think meeting you was just some random coincidence or one of those friendships that was meant to come and go. Somehow, He decided our paths would cross, and I'll always be grateful that they did. You've brought so much peace into my life, so much laughter, so much comfort, and so many conversations I'll probably remember for a very long time. You've helped me through moments you probably don't even realize you helped me through, and I hope you never underestimate the impact you've had on my life, because it's bigger than you'll ever know." },
+  { text: "Sometimes I think about how all of this started, and it's honestly funny. If someone had told me back then that we'd still be here years later—that you'd become one of the most important people in my life—I probably wouldn't have believed them. Yet here we are. In a world where friendships come and go so easily, ours stayed. We've grown, we've changed, we've disappeared for a bit and somehow always found our way back to each other. I don't take that for granted. I never will." },
+  { text: "One of my favorite things about you is how easy you make it for people to be themselves. You listen. You care. You don't make people feel silly for opening up. You have this quiet way of making people feel seen, heard, and accepted, and I honestly don't know if you realize how special that is. It's one of the many reasons you're such an incredible person." },
+  { text: "And I hope you know this will always go both ways. Thank you for being there for me, but I also want you to know that I'll always be here for you too. Whether life is going exactly how you planned or completely falling apart, whether you need advice, someone to rant to, someone to celebrate with, or someone to sit in silence with, you'll always have me. You never have to earn that, and you never have to wonder if you're bothering me. As long as I'm around, you've got someone in your corner." },
+  { text: "And to my favorite med student, I hope this next year is filled with success in every part of your life. I pray every exam, every posting, every rotation, and every challenge reminds you just how capable, intelligent, and resilient you are. I know medicine isn't easy, but I know you're more than capable of becoming the amazing doctor you're working so hard to be. I genuinely wish you nothing but success, and... on a slightly selfish note, I really hope your rotations don't end you before you finish them. 😭" },
+  { text: "Thank you for every conversation, every laugh, every reality check, every random discussion, every piece of advice, and every time you've simply been there. Thank you for choosing to stay, and thank you for making my life better just by being in it." },
+  { text: "Happy 19th Birthday, Faith.", class: "text-center font-semibold text-xl text-gray-800 mt-2" },
+  { text: "I pray this new chapter is filled with happiness, peace, good health, answered prayers, and countless reasons to smile. I hope life is gentle with you, I hope your dreams come true, and I hope you never lose the kind, genuine heart that makes you... you." },
+  { text: "You deserve every good thing that's coming your way.", class: "text-center font-medium text-gray-600" },
+  { text: "Oh... and one last thing.", class: "text-center text-gray-400 italic text-base" },
+  { text: "We're finally taking that picture together.", class: "text-center font-semibold text-gray-800 text-lg" },
+  { text: "Happy Birthday, Faith. ❤️", class: "text-center font-bold text-2xl mt-4", style: "background:linear-gradient(135deg,#EC4899,#A855F7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" }
+];
+
+
+// ============================
+// STATE
+// ============================
+let currentQ = 0;
+let selectedOptions = new Set();
+let isRevealed = false;
+let isMuted = true;
+let audioCtx, musicGain;
+let heartsInterval = null;
+
+
+// ============================
+// DOM REFS
+// ============================
+const landing = document.getElementById('landing');
+const quizSection = document.getElementById('quiz-section');
+const quizCard = document.getElementById('quiz-card');
+const quizContent = document.getElementById('quiz-content');
+const letterSection = document.getElementById('letter-section');
+const letterContent = document.getElementById('letter-content');
+const whiteOverlay = document.getElementById('white-overlay');
+const endingOverlay = document.getElementById('ending-overlay');
+const endingContent = document.getElementById('ending-content');
+const musicBtn = document.getElementById('music-btn');
+const musicIcon = document.getElementById('music-icon');
+const confettiCanvas = document.getElementById('confetti-canvas');
+const celebrateBtn = document.getElementById('celebrate-btn');
+const particlesContainer = document.getElementById('particles-container');
+
+
+// ============================
+// MUSIC SYSTEM (Web Audio API ambient pad)
+// ============================
+function initMusic() {
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    musicGain = audioCtx.createGain();
+    musicGain.gain.value = 0;
+    musicGain.connect(audioCtx.destination);
+
+    const notes = [
+      { freq: 130.81, vol: 0.12 },
+      { freq: 164.81, vol: 0.09 },
+      { freq: 196.00, vol: 0.07 },
+      { freq: 246.94, vol: 0.05 },
+      { freq: 261.63, vol: 0.04 },
+      { freq: 329.63, vol: 0.03 }
+    ];
+
+    notes.forEach(n => {
+      const osc = audioCtx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.value = n.freq;
+
+      const g = audioCtx.createGain();
+      g.gain.value = n.vol;
+
+      const lfo = audioCtx.createOscillator();
+      lfo.frequency.value = 0.2 + Math.random() * 0.3;
+      const lfoG = audioCtx.createGain();
+      lfoG.gain.value = 1.2;
+      lfo.connect(lfoG);
+      lfoG.connect(osc.frequency);
+      lfo.start();
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.value = 500;
+      filter.Q.value = 0.3;
+
+      osc.connect(filter);
+      filter.connect(g);
+      g.connect(musicGain);
+      osc.start();
+    });
+  } catch(e) { console.log('Audio not supported'); }
+}
+
+function toggleMusic() {
+  if (!audioCtx) initMusic();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  isMuted = !isMuted;
+  musicGain.gain.linearRampToValueAtTime(isMuted ? 0 : 0.06, audioCtx.currentTime + 0.5);
+  musicIcon.setAttribute('icon', isMuted ? 'lucide:volume-x' : 'lucide:volume-2');
+  musicIcon.style.color = isMuted ? '#6B7280' : '#EC4899';
+}
+
+musicBtn.addEventListener('click', toggleMusic);
+
+
+// ============================
+// CONFETTI SYSTEM
+// ============================
+class ConfettiSystem {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.particles = [];
+    this.running = false;
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+  }
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+  launch(count = 120, spread = true) {
+    const colors = ['#F472B6','#A78BFA','#60A5FA','#FBBF24','#34D399','#FB7185','#C084FC','#F9A8D4','#93C5FD'];
+    const cx = this.canvas.width / 2;
+    for (let i = 0; i < count; i++) {
+      this.particles.push({
+        x: spread ? cx + (Math.random()-0.5)*this.canvas.width*0.8 : Math.random()*this.canvas.width,
+        y: spread ? -20 - Math.random()*60 : -10 - Math.random()*200,
+        w: 5 + Math.random()*7,
+        h: 3 + Math.random()*9,
+        color: colors[Math.floor(Math.random()*colors.length)],
+        vx: (Math.random()-0.5)*(spread?6:3),
+        vy: 1.5 + Math.random()*4,
+        rot: Math.random()*360,
+        rotS: (Math.random()-0.5)*12,
+        opacity: 1,
+        shape: Math.random()>0.4?'rect':'circle',
+        gravity: 0.04 + Math.random()*0.03,
+        drag: 0.98 + Math.random()*0.015
+      });
+    }
+    if (!this.running) { this.running = true; this.animate(); }
+  }
+  animate() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.particles = this.particles.filter(p => {
+      p.vx *= p.drag;
+      p.vy += p.gravity;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.rotS;
+      if (p.y > this.canvas.height * 0.7) p.opacity -= 0.015;
+      if (p.opacity <= 0) return false;
+      this.ctx.save();
+      this.ctx.translate(p.x, p.y);
+      this.ctx.rotate(p.rot * Math.PI/180);
+      this.ctx.globalAlpha = Math.max(0, p.opacity);
+      this.ctx.fillStyle = p.color;
+      if (p.shape==='rect') {
+        this.ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      } else {
+        this.ctx.beginPath();
+        this.ctx.arc(0,0,p.w/2,0,Math.PI*2);
+        this.ctx.fill();
+      }
+      this.ctx.restore();
+      return true;
+    });
+    if (this.particles.length > 0) requestAnimationFrame(()=>this.animate());
+    else this.running = false;
+  }
+}
+const confetti = new ConfettiSystem(confettiCanvas);
+
+
+// ============================
+// PARTICLES
+// ============================
+function createParticles() {
+  const colors = ['rgba(244,114,182,0.3)','rgba(167,139,250,0.3)','rgba(96,165,250,0.25)','rgba(251,191,36,0.2)','rgba(249,168,212,0.25)'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = 4 + Math.random()*10;
+    p.style.cssText = `
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${12+Math.random()*18}s;
+      animation-delay:${Math.random()*15}s;
+    `;
+    particlesContainer.appendChild(p);
+  }
+}
+createParticles();
+
+
+// ============================
+// TYPEWRITER
+// ============================
+function typewriter(el, text, speed = 25) {
+  return new Promise(resolve => {
+    el.textContent = '';
+    el.classList.add('typewriter-cursor');
+    let i = 0;
+    function tick() {
+      if (i < text.length) {
+        el.textContent += text.charAt(i);
+        i++;
+        setTimeout(tick, speed);
+      } else {
+        el.classList.remove('typewriter-cursor');
+        resolve();
+      }
+    }
+    tick();
+  });
+}
+
+
+// ============================
+// QUIZ RENDERING
+// ============================
+const letters = ['A','B','C','D'];
+
+function renderQuestion() {
+  const q = quizData[currentQ];
+  const progress = ((currentQ) / quizData.length) * 100;
+  selectedOptions = new Set();
+  isRevealed = false;
+
+  let optionsHTML = q.options.map((opt, i) => `
+    <button class="opt-btn w-full" data-index="${i}">
+      <span class="letter">${letters[i]}</span>
+      <span>${opt}</span>
+    </button>
+  `).join('');
+
+  let revealBtnHTML = q.multiSelect ? `<div class="text-center mt-5 hidden" id="multi-reveal-wrap"><button class="reveal-btn" id="multi-reveal-btn">See Answer</button></div>` : '';
+
+  quizContent.innerHTML = `
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-xs font-medium text-gray-400 tracking-wide">Question ${currentQ+1} of ${quizData.length}</span>
+      <span class="text-xs text-gray-300">${Math.round(progress)}%</span>
+    </div>
+    <div class="prog-track mb-6"><div class="prog-fill" style="width:${progress}%"></div></div>
+    <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-6 leading-snug">${q.question}</h2>
+    <div class="flex flex-col gap-3" id="options-container">${optionsHTML}</div>
+    ${revealBtnHTML}
+    <div class="mt-6 hidden" id="reveal-area"></div>
+    <div class="mt-6 hidden text-center" id="continue-area"><button class="cont-btn" id="continue-btn">Continue</button></div>
+  `;
+
+  // Attach events
+  const optBtns = quizContent.querySelectorAll('.opt-btn');
+  optBtns.forEach(btn => {
+    btn.addEventListener('click', () => handleOptionClick(btn, parseInt(btn.dataset.index)));
+  });
+
+  if (q.multiSelect) {
+    const multiRevealBtn = document.getElementById('multi-reveal-btn');
+    const multiRevealWrap = document.getElementById('multi-reveal-wrap');
+    optBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (isRevealed) return;
+        multiRevealWrap.classList.remove('hidden');
+      });
+    });
+    if (multiRevealBtn) {
+      multiRevealBtn.addEventListener('click', () => {
+        if (selectedOptions.size === 0 || isRevealed) return;
+        revealMultiAnswer();
+      });
+    }
+  }
+
+  const continueBtn = document.getElementById('continue-btn');
+  if (continueBtn) continueBtn.addEventListener('click', goToNext);
+}
+
+function handleOptionClick(btn, index) {
+  if (isRevealed) return;
+  const q = quizData[currentQ];
+
+  if (q.multiSelect) {
+    if (selectedOptions.has(index)) {
+      selectedOptions.delete(index);
+      btn.classList.remove('selected');
+    } else {
+      selectedOptions.add(index);
+      btn.classList.add('selected');
+    }
+  } else {
+    selectedOptions.add(index);
+    // Highlight selected
+    quizContent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    // Reveal immediately
+    setTimeout(() => revealSingleAnswer(index), 400);
+  }
+}
+
+function revealSingleAnswer(selectedIndex) {
+  isRevealed = true;
+  const q = quizData[currentQ];
+  const btns = quizContent.querySelectorAll('.opt-btn');
+  const isCorrect = q.correct.includes(selectedIndex);
+
+  btns.forEach((btn, i) => {
+    btn.classList.add('locked');
+    if (q.correct.includes(i)) btn.classList.add('correct');
+    else if (i === selectedIndex && !isCorrect) btn.classList.add('wrong');
+  });
+
+  showRevealAndContinue(q.reveal);
+}
+
+function revealMultiAnswer() {
+  isRevealed = true;
+  const q = quizData[currentQ];
+  const btns = quizContent.querySelectorAll('.opt-btn');
+
+  btns.forEach((btn, i) => {
+    btn.classList.add('locked');
+    btn.classList.remove('selected');
+    if (q.correct.includes(i)) {
+      btn.classList.add('correct');
+    } else if (selectedOptions.has(i)) {
+      btn.classList.add('wrong');
+    }
+  });
+
+  // Hide reveal button
+  const wrap = document.getElementById('multi-reveal-wrap');
+  if (wrap) wrap.classList.add('hidden');
+
+  showRevealAndContinue(q.reveal);
+}
+
+function showRevealAndContinue(revealText) {
+  const revealArea = document.getElementById('reveal-area');
+  const continueArea = document.getElementById('continue-area');
+
+  if (revealText) {
+    revealArea.classList.remove('hidden');
+    const p = document.createElement('p');
+    p.className = 'text-gray-500 text-sm sm:text-base leading-relaxed';
+    p.style.minHeight = '2em';
+    revealArea.appendChild(p);
+    typewriter(p, revealText, 18).then(() => {
+      continueArea.classList.remove('hidden');
+      continueArea.style.animation = 'fadeInUp 0.5s ease-out forwards';
+    });
+  } else {
+    continueArea.classList.remove('hidden');
+    continueArea.style.animation = 'fadeInUp 0.5s ease-out forwards';
+  }
+}
+
+function goToNext() {
+  quizCard.classList.remove('anim-card-enter');
+  quizCard.classList.add('anim-card-exit');
+
+  setTimeout(() => {
+    currentQ++;
+    if (currentQ < quizData.length) {
+      quizCard.classList.remove('anim-card-exit');
+      quizCard.classList.add('anim-card-enter');
+      renderQuestion();
+    } else {
+      showBonusPage();
+    }
+  }, 380);
+}
+
+
+// ============================
+// BONUS PAGE
+// ============================
+function showBonusPage() {
+  quizCard.classList.remove('anim-card-exit');
+  quizCard.classList.add('anim-card-enter');
+
+  let linesHTML = bonusContent.lines.map((line, i) => {
+    const delay = 0.15 * (i + 1);
+    const isLast = i === bonusContent.lines.length - 1;
+    return `<p class="anim-fade-up text-gray-600 text-sm sm:text-base leading-relaxed ${isLast ? 'font-semibold text-gray-800 text-lg mt-2' : ''}" style="animation-delay:${delay}s">${line}</p>`;
+  }).join('');
+
+  quizContent.innerHTML = `
+    <div class="text-center mb-6">
+      <h2 class="text-xl font-bold text-gray-800">${bonusContent.title}</h2>
+    </div>
+    <div class="flex flex-col gap-3 sm:gap-4 mb-8">${linesHTML}</div>
+    <div class="text-center"><button class="cont-btn" id="bonus-continue-btn">Continue</button></div>
+  `;
+
+  document.getElementById('bonus-continue-btn').addEventListener('click', () => {
+    quizCard.classList.add('anim-card-exit');
+    setTimeout(() => {
+      showFinalQuestion();
+    }, 380);
+  });
+}
+
+
+// ============================
+// FINAL QUESTION
+// ============================
+function showFinalQuestion() {
+  quizCard.classList.remove('anim-card-exit');
+  quizCard.classList.add('anim-card-enter');
+
+  let optionsHTML = finalQuestion.options.map((opt, i) => `
+    <button class="opt-btn w-full" data-index="${i}">
+      <span class="letter">${letters[i]}</span>
+      <span>${opt}</span>
+    </button>
+  `).join('');
+
+  quizContent.innerHTML = `
+    <div class="text-center mb-6">
+      <span class="text-xs font-medium text-purple-400 tracking-widest uppercase">Final Question</span>
+    </div>
+    <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-6 leading-snug text-center">${finalQuestion.question}</h2>
+    <div class="flex flex-col gap-3" id="final-options">${optionsHTML}</div>
+  `;
+
+  const btns = quizContent.querySelectorAll('.opt-btn');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('locked')) return;
+      btns.forEach(b => b.classList.add('locked'));
+      btn.classList.add('selected');
+      // Brief highlight, then cinematic fade
+      setTimeout(() => cinematicFade(), 1200);
+    });
+  });
+}
+
+
+// ============================
+// CINEMATIC FADE
+// ============================
+function cinematicFade() {
+  whiteOverlay.classList.add('active');
+  setTimeout(() => {
+    quizSection.classList.add('hidden');
+    showLetter();
+    setTimeout(() => {
+      whiteOverlay.classList.remove('active');
+    }, 400);
+  }, 1400);
+}
+
+
+// ============================
+// LETTER
+// ============================
+function showLetter() {
+  letterSection.classList.remove('hidden');
+
+  let html = '<div class="flex flex-col gap-6">';
+  letterParagraphs.forEach((p, i) => {
+    const cls = p.class || 'text-gray-600';
+    const style = p.style || '';
+    const delayClass = `letter-p`;
+    html += `<p class="${cls} ${delayClass}" ${style ? `style="${style}"` : ''} data-delay="${i * 80}">${p.text}</p>`;
+  });
+  html += '</div>';
+  letterContent.innerHTML = html;
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // Observe for scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), parseInt(entry.target.dataset.delay) || 0);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.letter-p').forEach(p => observer.observe(p));
+
+  celebrateBtn.addEventListener('click', triggerEnding);
+}
+
+
+// ============================
+// ENDING
+// ============================
+function triggerEnding() {
+  // Big confetti burst
+  confetti.launch(250, true);
+  setTimeout(() => confetti.launch(150, true), 600);
+  setTimeout(() => confetti.launch(100, true), 1200);
+
+  // Start floating hearts
+  startHearts();
+
+  // Show ending overlay
+  endingOverlay.classList.remove('hidden');
+  endingOverlay.style.animation = 'fadeIn 1s ease-out forwards';
+
+  endingContent.innerHTML = `
+    <div style="animation:bounceIn 0.8s ease-out forwards">
+      <p class="text-6xl sm:text-7xl mb-6">❤️</p>
+      <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4" style="background:linear-gradient(135deg,#EC4899,#A855F7,#6366F1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">
+        Happy 19th Birthday,<br>Faith
+      </h2>
+      <p class="text-gray-400 text-sm mt-6 mb-10 font-light">You deserve every good thing.</p>
+      <button id="replay-btn" class="text-sm text-gray-400 hover:text-pink-400 transition-colors duration-300 underline underline-offset-4 decoration-gray-300 hover:decoration-pink-300">
+        Play Again
+      </button>
+    </div>
+  `;
+
+  document.getElementById('replay-btn').addEventListener('click', () => location.reload());
+
+  // Add zoom to background
+  document.querySelector('.bg-main').classList.add('bg-zoom');
+}
+
+function startHearts() {
+  const hearts = ['❤️','💕','💗','💖','🤍','🩷'];
+  if (heartsInterval) clearInterval(heartsInterval);
+  heartsInterval = setInterval(() => {
+    const h = document.createElement('div');
+    h.className = 'float-heart';
+    h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.cssText = `
+      left:${5+Math.random()*90}%;
+      bottom:-20px;
+      font-size:${1+Math.random()*1.5}rem;
+      animation-duration:${4+Math.random()*3}s;
+    `;
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 7500);
+  }, 350);
+
+  // Stop after 15 seconds
+  setTimeout(() => {
+    if (heartsInterval) { clearInterval(heartsInterval); heartsInterval = null; }
+  }, 15000);
+}
+
+
+// ============================
+// PAGE TRANSITIONS
+// ============================
+function showQuiz() {
+  landing.style.animation = 'fadeOut 0.6s ease-out forwards';
+  setTimeout(() => {
+    landing.classList.add('hidden');
+    quizSection.classList.remove('hidden');
+    renderQuestion();
+  }, 600);
+}
+
+
+// ============================
+// INIT
+// ============================
+document.getElementById('start-btn').addEventListener('click', () => {
+  // Init music on first interaction
+  if (!audioCtx) initMusic();
+  showQuiz();
+});
+
+// Landing confetti
+setTimeout(() => confetti.launch(80, true), 800);
+setTimeout(() => confetti.launch(40, true), 1600);
+</script>
+</body>
+</html>
